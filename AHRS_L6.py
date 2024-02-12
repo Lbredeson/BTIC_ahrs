@@ -10,7 +10,7 @@ WIDTH, HEIGHT = 640,380
 CENTER = (WIDTH // 2, HEIGHT // 2)
 WHITE = (255, 255, 255)
 RED = (255, 0, 0)
-IMAGE_SCALE_FACTOR = 0.35  # Adjust the scale factor as needed
+IMAGE_SCALE_FACTOR = 0.32  # Adjust the scale factor as needed
 PITCH_ROLL_SPEED = 1  # Adjust the speed of pitch and roll adjustments
 
 def pitch_angle_to_color(angle):
@@ -198,10 +198,8 @@ def ahrs_main():
                 elif event.key == pygame.K_RIGHT:
                     roll_angle += PITCH_ROLL_SPEED
 
-        # Clear the back buffer
+       # Clear the back buffer
         back_buffer.fill(WHITE)
-
-        # Draw horizon remains unchanged
 
         # Define circle properties
         circle_radius = 100
@@ -212,26 +210,24 @@ def ahrs_main():
         rotated_left_image, new_position_left = rotate_image(left_image, -roll_angle, left_circle_center)
         back_buffer.blit(rotated_left_image, new_position_left)
 
-        rotated_right_image, new_position_right = rotate_image(right_image, -pitch_angle, right_circle_center)
+        rotated_right_image, new_position_right = rotate_image(right_image, pitch_angle, right_circle_center)
         back_buffer.blit(rotated_right_image, new_position_right)
 
         # Draw circles around the images
         pygame.draw.circle(back_buffer, RED, left_circle_center, circle_radius, 2)
         pygame.draw.circle(back_buffer, RED, right_circle_center, circle_radius, 2)
 
-        # Draw angle markers and moving marker for roll
-        draw_angle_markers(back_buffer, left_circle_center, circle_radius, roll_angle)
+        # Draw angle markers and moving marker for roll and pitch
+        draw_angle_markers(back_buffer, left_circle_center, circle_radius, roll_angle, is_pitch=False)
+        draw_angle_markers(back_buffer, right_circle_center, circle_radius, -pitch_angle, is_pitch=True)
 
-        # Draw angle markers and moving marker for pitch
-        draw_angle_markers(back_buffer, right_circle_center, circle_radius, pitch_angle, is_pitch=True)
-
-        # Draw data boxes for roll and pitch
+        # Draw data boxes for roll and pitch under the circles
         roll_text = font.render(f"Roll: {roll_angle:.3f}°", True, RED)
-        pitch_text = font.render(f"Pitch: {-pitch_angle:.3f}°", True, RED)
+        pitch_text = font.render(f"Pitch: {pitch_angle:.3f}°", True, RED)
 
-        # Position data boxes
-        roll_text_rect = roll_text.get_rect(topright=(WIDTH - 10, 10))
-        pitch_text_rect = pitch_text.get_rect(topright=(WIDTH - 10, 30))
+        # Position data boxes below the circles
+        roll_text_rect = roll_text.get_rect(midtop=(left_circle_center[0], left_circle_center[1] + circle_radius + 20))
+        pitch_text_rect = pitch_text.get_rect(midtop=(right_circle_center[0], right_circle_center[1] + circle_radius + 20))
 
         # Blit data boxes onto the back buffer
         back_buffer.blit(roll_text, roll_text_rect)
