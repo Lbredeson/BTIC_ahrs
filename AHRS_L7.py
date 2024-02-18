@@ -157,6 +157,7 @@ def ahrs_main():
         circle_radius = 100
         left_circle_center = (WIDTH // 4, HEIGHT // 2)  # Center for the left image (Roll)
         right_circle_center = (3 * WIDTH // 4, HEIGHT // 2)  # Center for the right image (Pitch)
+        right_circle_center_adjust = (3 * WIDTH // 4, (HEIGHT // 2) + 10)
 
         # Rotate and blit the images to the back buffer, negating the angles to correct rotation direction
         rotated_left_image, new_position_left = rotate_image(left_image, -roll_angle, left_circle_center)
@@ -169,8 +170,8 @@ def ahrs_main():
         pitch_color = pitch_angle_to_color(pitch_angle)
         roll_color = roll_angle_to_color(roll_angle)
         # Draw circles around the images
-        pygame.draw.circle(back_buffer, roll_color, left_circle_center, circle_radius, 2)
-        pygame.draw.circle(back_buffer, pitch_color, right_circle_center, circle_radius, 2)
+        pygame.draw.circle(back_buffer, roll_color, left_circle_center, circle_radius, 4)
+        pygame.draw.circle(back_buffer, pitch_color, right_circle_center, circle_radius, 4)
 
         # Draw angle markers and moving marker for roll and pitch
         draw_angle_markers(back_buffer, left_circle_center, circle_radius, roll_angle, is_pitch=False)
