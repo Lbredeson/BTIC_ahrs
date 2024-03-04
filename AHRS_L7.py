@@ -10,7 +10,7 @@ WIDTH, HEIGHT = 640,380
 CENTER = (WIDTH // 2, HEIGHT // 2)
 WHITE = (255, 255, 255)
 RED = (255, 0, 0)
-IMAGE_SCALE_FACTOR = 0.5 # Adjust the scale factor as needed
+IMAGE_SCALE_FACTOR = 0.32 # Adjust the scale factor as needed
 PITCH_ROLL_SPEED = 1  # Adjust the speed of pitch and roll adjustments
 
 def pitch_angle_to_color(angle):
@@ -117,10 +117,10 @@ def ahrs_main():
     pygame.display.set_caption('AHRS Visualization')
 
     # Load and scale the images
-    left_image = pygame.image.load("Rover GUI Images/fish1.png")  # Ensure correct pathOrtho_Rear_PNG.PNG
+    left_image = pygame.image.load("Rover GUI Images/Ortho_Rear_PNG.PNG")  # Ensure correct pathOrtho_Rear_PNG.PNG
     left_image = scale_image(left_image, IMAGE_SCALE_FACTOR)
 
-    right_image = pygame.image.load("Rover GUI Images/fish.png")  # Ensure correct pathOrtho_Right_PNG.PNG
+    right_image = pygame.image.load("Rover GUI Images/Ortho_Right_PNG.PNG")  # Ensure correct pathOrtho_Right_PNG.PNG
     right_image = scale_image(right_image, IMAGE_SCALE_FACTOR)
 
     # Create back buffer surface
